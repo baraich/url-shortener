@@ -1,5 +1,5 @@
 import { customAlphabet, urlAlphabet } from "nanoid";
-import { procedure, router } from "@/server/trpc";
+import { publicProcedure, router } from "@/server/trpc";
 import { z } from "zod";
 import getBaseUrl from "@/lib/baseUrl";
 
@@ -7,7 +7,7 @@ const urlsMap: Map<string, string> = new Map();
 const nanoid = customAlphabet(urlAlphabet, 8);
 
 export const appRouter = router({
-  createUrl: procedure
+  createUrl: publicProcedure
     .input(z.object({ full_url: z.string() }))
     .mutation(function ({ input }) {
       const id = nanoid();
@@ -18,7 +18,7 @@ export const appRouter = router({
       return { shortUrl };
     }),
 
-  urlLookup: procedure
+  urlLookup: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(function ({ input }) {
       if (urlsMap.has(input.id)) {

@@ -1,4 +1,9 @@
+import getPrismaClient from "@/lib/getPrismaClient";
+
 export const createContext = async () => {
-  return {};
+  const prismaClient = getPrismaClient();
+  return {
+    prismaClient,
+  };
 };
 export type Context = ReturnType<typeof createContext>;
